@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #f59e0b;
+  --color-accent: #18181b;
+  --font-mono:'JetBrains Mono', monospace;
+}
+*{
+  font-family: var(--font-mono);
+}
+
+/* 1. HIDE HORIZONTAL SCROLLBAR */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* 2. CUSTOM VERTICAL SCROLLBAR (Optional but recommended) */
+/* This makes your MainContent scrollbar narrow and dark instead of thick white */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #18181b;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #f59e0b;
+}
+
+.Library-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+}
