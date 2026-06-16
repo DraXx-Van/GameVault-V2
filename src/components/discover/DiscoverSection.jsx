@@ -8,8 +8,8 @@ const DiscoverSection = () => {
     <div className='flex flex-col shrink-0 w-full mt-4'>
         <div className='flex items-center justify-between group px-2'>
           <FeaturedHeading heading={"Discover Deals"}/>
-          <div className='bg-[#18181b]/30 rounded-lg flex gap-1 p-1 border-white/5 border'>
-            <FilterButton isActive={true} label={"Deals"} />
+          <div className='bg-gv-card/30 rounded-lg flex gap-1 p-1 border-white/5 border'>
+            <FilterButton isActive={true} label={"Deals"}/>
             <FilterButton isActive={false} label={"Top rated"}/>
             <FilterButton isActive={false} label={"Trending"}/>
           </div>
