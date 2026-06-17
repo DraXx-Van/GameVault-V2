@@ -7,46 +7,24 @@ import { getGameTrailer, searchYouTubeTrailer } from "@/services/rawgApi";
 const   GameDeatilsHero = ({ game }) => {
   
   const [youtubeId, setYoutubeId]= useState(null);
-  const [rawgUrl, setRawgUrl] = useState(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef(null);
-  const iframeKey = useRef(0); // force iframe re-mount on game change
+  const iframeKey = useRef(0);  // force iframe re-mount on game change
   const[ui,setUi] = useState(true);
 
   useEffect(() => {
-    if (!game) return;
+    if (!game?.name) return;
 
-    // Reset on game switch
-    setYoutubeId(null);
-    setRawgUrl(null);
-    setVideoLoaded(false);
-    setIsMuted(true);
-    iframeKey.current++;
+    async function loadTrailer() {
+      const ytId = await searchYouTubeTrailer(game.name);
 
-    // ── Priority 1: RAWG clip field (embedded in game details, no extra call)
-    const clipUrl =
-      game.clip?.clips?.full ||
-      game.clip?.clips?.["640"] ||
-      game.clip?.clip ||
-      null;
-
-    // ── Priority 2: RAWG /movies endpoint + YouTube search run in parallel
-    Promise.all([
-      getGameTrailer(game.id),
-      searchYouTubeTrailer(game.name),
-    ]).then(([rawg, ytId]) => {
-      // YouTube beats everything else because it has trailers for every game
       if (ytId) {
         setYoutubeId(ytId);
-      } else if (rawg) {
-        setRawgUrl(rawg);
-      } else if (clipUrl) {
-        // Only fall back to RAWG clip if nothing else found
-        setRawgUrl(clipUrl);
       }
-    });
-  }, [game?.id]);
+    }
+
+    loadTrailer();
+  }, [game?.name]);
 
   const getPlatformIcon = (slug) => {
     switch (slug) {
@@ -72,13 +50,10 @@ const   GameDeatilsHero = ({ game }) => {
         );
         setIsMuted(!isMuted);
       }
-    } else if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
     }
   };
 
-  const hasMedia = youtubeId || rawgUrl;
+  const hasMedia = youtubeId;
 
   // Build YouTube embed URL with all background-video settings
   const ytSrc = youtubeId
@@ -126,22 +101,6 @@ const   GameDeatilsHero = ({ game }) => {
           />
         </div>
       )}
-
-      {/* ── RAWG MP4 clip / movie fallback ──
-      {!youtubeId && rawgUrl && (
-        <video
-          ref={videoRef}
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${
-            videoLoaded ? "opacity-10" : "opacity-0"
-          }`}
-          src={rawgUrl}
-          autoPlay
-          muted
-          loop
-          playsInline
-          onCanPlay={() => setVideoLoaded(true)}
-        />
-      )} */}
 
       {/* ── Gradient overlays ── */}
       <div className={`absolute inset-0 bg-linear-to-t from-gv-bg ${ui ? "via-gv-bg50" : "via-gv-bg/10"} to-transparent transition duration-1000`}/> 

@@ -104,17 +104,17 @@ export const searchYouTubeTrailer = async (gameName) => {
   const ytKey = import.meta.env.VITE_YOUTUBE_API_KEY;
   if (!ytKey) return null;
 
-  return "nq1M_Wc4FIc";
-  // try {
-  //   const q = encodeURIComponent(`${gameName} official game trailer`);
-  //   const response = await axios.get(
-  //     `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}&type=video&maxResults=1&key=${ytKey}`
-  //   );
-  //   const items = response.data.items;
-  //   return items?.length > 0 ? items[0].id.videoId : null;
-  // } catch {
-  //   return null;
-  // }
+  // return "nq1M_Wc4FIc";
+  try {
+    const q = encodeURIComponent(`${gameName} official game trailer`);
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}&type=video&maxResults=1&key=${ytKey}`
+    );
+    const items = response.data.items;
+    return items?.length > 0 ? items[0].id.videoId : null;
+  } catch {
+    return null;
+  }
 };
 
 
