@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import GoldButton from "./Buttons/GoldButton";
 import GlassButton from "./Buttons/GlassButton";
 import ActionButton from "./Buttons/ActionButton";
-import { getGameTrailer, searchYouTubeTrailer } from "@/services/rawgApi";
+import { searchYouTubeTrailer } from "@/services/rawgApi";
 
-const   GameDeatilsHero = ({ game }) => {
+const GameDeatilsHero = ({ game }) => {
   
   const [youtubeId, setYoutubeId]= useState(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -15,6 +15,10 @@ const   GameDeatilsHero = ({ game }) => {
   useEffect(() => {
     if (!game?.name) return;
 
+    setVideoLoaded(false);
+    setYoutubeId(null);
+    setIsMuted(true);
+    
     async function loadTrailer() {
       const ytId = await searchYouTubeTrailer(game.name);
 
@@ -61,7 +65,7 @@ const   GameDeatilsHero = ({ game }) => {
     : null;
 
   return (
-    <div className={`relative rounded-3xl overflow-hidden shadow-2xl ${videoLoaded ? "min-h-[90%]" : "min-h-[60%]" } transition-all duration-1000 p-10 flex flex-col justify-between group shrink-0 bg-gv-surface`}>
+    <div className={`relative rounded-3xl overflow-hidden shadow-2xl ${videoLoaded ? "min-h-[90%]" : "min-h-[70%]" } transition-all duration-1000 p-10 flex flex-col justify-between group shrink-0 bg-gv-surface`}>
 
       {/* ── Background artwork (always visible as base / while media loads) */}
       <img
@@ -103,7 +107,7 @@ const   GameDeatilsHero = ({ game }) => {
       )}
 
       {/* ── Gradient overlays ── */}
-      <div className={`absolute inset-0 bg-linear-to-t from-gv-bg ${ui ? "via-gv-bg50" : "via-gv-bg/10"} to-transparent transition duration-1000`}/> 
+      <div className={`absolute inset-0 bg-linear-to-t from-gv-bg ${ui ? "via-gv-bg/50" : "via-gv-bg/10"} to-transparent transition duration-1000`}/> 
       <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/20 to-transparent" />
 
       {/* ── Top Row ── */}
@@ -149,6 +153,8 @@ const   GameDeatilsHero = ({ game }) => {
       </div>
 
       {/* ── Bottom Content ── */}
+      
+      
       
       <div className={`z-10 flex flex-col space-y-6 ${ui ? "opacity-100" : "opacity-0"} transition-all duration-1000`}>
 

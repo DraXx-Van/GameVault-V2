@@ -82,21 +82,30 @@ export const getGameDetails = async (id) => {
   return response.data;
 }
 
-export const getGameTrailer = async (id) => {
-  try {
-    const response = await axios.get(
-      `https://api.rawg.io/api/games/${id}/movies`,
-      { params: { key: API_KEY } }
-    );
-    const results = response.data.results;
-    if (results && results.length > 0) {
-      return results[0].data?.max || results[0].data?.["480"] || null;
+export const getScreenshots = async (id) => {
+  const response = await axios.get(
+    `https://api.rawg.io/api/games/${id}/screenshots`,
+    {
+      params: {
+        key: API_KEY
+      },
     }
-    return null;
-  } catch {
-    return null;
-  }
-};
+  )
+  return response.data.results;
+}
+
+export const getStores = async (id) => {
+  const response = await axios.get( 
+    `https://api.rawg.io/api/games/${id}/stores`,
+    {
+      params: {
+        key: API_KEY,
+      },
+    }
+  )
+
+  return response.data.results;
+}
 
 // Searches YouTube Data API v3 for an official game trailer.
 // Returns a YouTube video ID string, or null if unavailable / no key set.

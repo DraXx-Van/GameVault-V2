@@ -24,10 +24,10 @@ const AboutSection = ({ game }) => {
         <i className={`ri-arrow-${fullDetails ? "down" : "up"}-s-line text-lg`}></i>
       </button>
 
-      {(minimumReq || recommendedReq) && (
+      {(minimumReq || recommendedReq) ? (
         <div>
           <h3 className='uppercase text-gv-muted font-bold tracking-widest pt-8 border-t border-white/10 font-mono'>
-            System Requirements
+            System Requirements For Pc
           </h3>
           <div className='mt-5 grid grid-cols-1 gap-8 md:grid-cols-2 text-white/60 leading-relaxed text-[13px] font-mono'>
             {minimumReq && (
@@ -42,39 +42,38 @@ const AboutSection = ({ game }) => {
             )}
           </div>
         </div>
-      )}
+      ) : <h3 className='text-center opacity-80 whitespace-pre-line'>System Requirements Not Available</h3>}
     </div>
   );
 };
 
 const Image = ({ src }) => {
   return (
-    <div className='w-100 md:w-150 shrink-0 rounded-xl overflow-hidden border border-white/5 shadow-2xl transition-all duration-300 hover:scale-[1.02] snap-center transform-gpu'>
+    <div className='w-[320px] md:w-125 lg:w-175 shrink-0 rounded-xl
+      overflow-hidden border border-white/5 shadow-2xl transition-all duration-300 hover:scale-[1.02] snap-center transform-gpu'>
       <img className='w-full h-full object-cover' loading='lazy' decoding='async' src={src} alt="Game screenshot" />
     </div>
   );
 };
 
-const MediaGallery = ({ game }) => {
-  const images = [];
-  if (game.background_image) images.push(game.background_image);
-  if (game.background_image_additional) images.push(game.background_image_additional);
-
-  if (images.length === 0) return null;
-
+const MediaGallery = ({ screenshots }) => {
+  
+ if( screenshots.length === 0 ){
+    return null;
+ }
   return (
-    <div className='mt-8 pt-8 border-t border-white/10'>
-      <h3 className='uppercase text-gv-muted font-bold tracking-widest mb-5 font-mono'>Media Gallery</h3>
-      <div className='flex gap-6 overflow-x-auto scrollbar-hide pb-5 snap-x snap-mandatory scroll-smooth'>
-        {images.map((src, index) => (
-          <Image key={index} src={src} />
+    <div className='mt-8 pt-5 border-t border-white/10'>
+      <h3 className='uppercase text-gv-muted font-bold tracking-widest mb-3 font-mono'>Media Gallery</h3>
+      <div className='flex gap-6 overflow-x-auto scrollbar-hide pb-5 p-5 snap-x snap-mandatory scroll-smooth'>
+        {screenshots.map((src) => (
+          <Image key={src.id} src={src.image} />
         ))}
       </div>
     </div>
   );
 };
 
-const GameContent = ({ game }) => {
+const GameContent = ({ game,screenshots,stores }) => {
   return (
     <div className='flex-1 flex flex-col gap-6 rounded-3xl h-full overflow-x-hidden overflow-y-auto pb-10'>
       <GameDeatilsHero game={game} />
@@ -84,10 +83,10 @@ const GameContent = ({ game }) => {
           <div className='flex-col gap-5 flex'>
             <GameRatingCard game={game} />
             <GameDev game={game} />
-            <GamePriceCard game={game} />
+            <GamePriceCard stores={stores} game={game.stores} />
           </div>
         </div>
-        <MediaGallery game={game} />
+        <MediaGallery screenshots={screenshots}/>
       </div>
     </div>
   );
