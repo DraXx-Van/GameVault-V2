@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const GameRatingCard = ({ game }) => {
-  if (!game) return null;
-
+ 
   // Simulated backend state for the 5 tiers so the UI feels alive.
   const [votes, setVotes] = useState({
     masterpiece: 124,
@@ -26,6 +25,7 @@ const GameRatingCard = ({ game }) => {
   ];
 
   const handleVote = (tierId) => {
+    
     setVotes(prev => {
       const newVotes = { ...prev };
       
@@ -33,13 +33,12 @@ const GameRatingCard = ({ game }) => {
       
       if (userVote !== tierId) {
         newVotes[tierId]++;
-        setUserVote(tierId);
-      } else {
-        setUserVote(null);
-      }
+      } 
       
       return newVotes;
     });
+
+    setUserVote( prevVote => prevVote === tierId ? null : tierId);
   };
 
   // Calculations for Default View
@@ -49,6 +48,7 @@ const GameRatingCard = ({ game }) => {
 
   const playtime = game.playtime ? `${game.playtime}H` : "N/A";
 
+  if (!game) return null;
   return (
     <div className='p-6 flex flex-col gap-5 bg-white/5 rounded-xl border border-white/5 backdrop-blur-md'>
       
@@ -62,7 +62,7 @@ const GameRatingCard = ({ game }) => {
       
       <div className='flex flex-col gap-4'>
         {/* Dynamic Content Area (Default View vs Breakdown View) */}
-        <div className='min-h-[70px] flex flex-col justify-center transition-all duration-300'>
+        <div className='min-h-17.5 flex flex-col justify-center transition-all duration-300'>
           {showRatingMenu ? (
             
             /* VIEW 2: The 5-Tier Breakdown & Interactive Voting */
@@ -112,7 +112,7 @@ const GameRatingCard = ({ game }) => {
                 </div>
               </div>
               
-              <span className='uppercase text-[10px] tracking-widest text-[#94a3b8] font-bold font-mono pl-0.5 mt-0.5'>
+              <span className='uppercase text-[10px] tracking-widest text-gv-muted font-bold font-mono pl-0.5 mt-0.5'>
                 Based on {totalVotes.toLocaleString()} Ratings
               </span>
             </div>

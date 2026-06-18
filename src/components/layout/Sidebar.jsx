@@ -6,10 +6,9 @@ import "remixicon/fonts/remixicon.css";
 
 const Sidebar = () => {
   return (
-    <div className="bg-[#0c0c0e] w-60 p-4 rounded-3xl flex flex-col overflow-hidden">
+    <div className="bg-gv-surface w-60 p-4 rounded-3xl flex flex-col overflow-hidden">
 
       <Logo />
-
       <div className="mt-8 px-2">
         <SearchBar />
       </div>

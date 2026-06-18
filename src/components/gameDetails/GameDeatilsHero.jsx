@@ -4,7 +4,7 @@ import GlassButton from "./Buttons/GlassButton";
 import ActionButton from "./Buttons/ActionButton";
 import { searchYouTubeTrailer } from "@/services/rawgApi";
 
-const GameDeatilsHero = ({ game }) => {
+const GameDeatilsHero = ({ game,storesRef }) => {
   
   const [youtubeId, setYoutubeId]= useState(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -65,12 +65,12 @@ const GameDeatilsHero = ({ game }) => {
     : null;
 
   return (
-    <div className={`relative rounded-3xl overflow-hidden shadow-2xl ${videoLoaded ? "min-h-[90%]" : "min-h-[70%]" } transition-all duration-1000 p-10 flex flex-col justify-between group shrink-0 bg-gv-surface`}>
+    <div ref={storesRef} className={`relative rounded-3xl overflow-hidden shadow-2xl ${videoLoaded ? "min-h-[90%]" : "min-h-[70%]" } transition-all duration-1000 p-10 flex flex-col justify-between group/bg shrink-0 bg-gv-surface`}>
 
       {/* ── Background artwork (always visible as base / while media loads) */}
       <img
         className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-          videoLoaded ? "opacity-0" : "opacity-90 group-hover:scale-[1.02]"
+          videoLoaded ? "opacity-0" : "opacity-90 group-hover/bg:scale-[1.02]"
         }`}
         src={game.background_image}
         alt={game.name}
@@ -108,7 +108,7 @@ const GameDeatilsHero = ({ game }) => {
 
       {/* ── Gradient overlays ── */}
       <div className={`absolute inset-0 bg-linear-to-t from-gv-bg ${ui ? "via-gv-bg/50" : "via-gv-bg/10"} to-transparent transition duration-1000`}/> 
-      <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/10 to-transparent" />
 
       {/* ── Top Row ── */}
       <div className="z-10 flex justify-between items-start">
@@ -221,7 +221,9 @@ const GameDeatilsHero = ({ game }) => {
         {/* CTAs */}
         <div className="flex items-center gap-4">
           <GoldButton label={"Add to library"} icon={"ri-add-line"} />
-          <GlassButton label={"View Stores"} icon={"ri-arrow-right-up-line"} />
+          <GlassButton onClick={() => {
+            storesRef.current?.scrollIntoView({behaviour : "smooth",});
+          }} label={"View Stores"} icon={"ri-arrow-right-up-line"}  />
         </div>
       </div>
     </div>

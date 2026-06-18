@@ -1,8 +1,8 @@
 import React from 'react'
 
-const GlassButton = ({label,icon}) => {
+const GlassButton = ({label,icon,onClick}) => {
   return (
-   <button className=' bg-black/40 border border-white/10 backdrop-blur-xl transition-all px-8 py-3 uppercase rounded-lg flex gap-2 cursor-pointer group text-white font-black tracking-widest text-[12px] shadow-2xl items-center hover:border-white/20'>
+   <button onClick={onClick} className=' bg-black/40 border border-white/10 backdrop-blur-xl transition-all px-8 py-3 uppercase rounded-lg flex gap-2 cursor-pointer group text-white font-black tracking-widest text-[12px] shadow-2xl items-center hover:border-white/20'>
         <span className=''>
             {label}
         </span>

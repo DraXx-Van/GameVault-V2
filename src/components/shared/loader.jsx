@@ -1,371 +1,162 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const Loader = () => {
   return (
     <StyledWrapper>
-      <div>
-        <div className="clouds">
-          <div className="cloud cloud1" />
-          <div className="cloud cloud2" />
-          <div className="cloud cloud3" />
-          <div className="cloud cloud4" />
-          <div className="cloud cloud5" />
-        </div>
-        <div className="loader">
-          <span><span /><span /><span /><span /></span>
-          <div className="base">
-            <span />
-            <div className="face" />
-          </div>
-        </div>
-        <div className="longfazers">
-          <span /><span /><span /><span />
-        </div>
+      <div className="loader">
+        <div className="loader-square" />
+        <div className="loader-square" />
+        <div className="loader-square" />
+        <div className="loader-square" />
+        <div className="loader-square" />
+        <div className="loader-square" />
+        <div className="loader-square" />
       </div>
     </StyledWrapper>
   );
 }
 
 const StyledWrapper = styled.div`
+  @keyframes square-animation {
+   0% {
+    left: 0;
+    top: 0;
+   }
+
+   10.5% {
+    left: 0;
+    top: 0;
+   }
+
+   12.5% {
+    left: 32px;
+    top: 0;
+   }
+
+   23% {
+    left: 32px;
+    top: 0;
+   }
+
+   25% {
+    left: 64px;
+    top: 0;
+   }
+
+   35.5% {
+    left: 64px;
+    top: 0;
+   }
+
+   37.5% {
+    left: 64px;
+    top: 32px;
+   }
+
+   48% {
+    left: 64px;
+    top: 32px;
+   }
+
+   50% {
+    left: 32px;
+    top: 32px;
+   }
+
+   60.5% {
+    left: 32px;
+    top: 32px;
+   }
+
+   62.5% {
+    left: 32px;
+    top: 64px;
+   }
+
+   73% {
+    left: 32px;
+    top: 64px;
+   }
+
+   75% {
+    left: 0;
+    top: 64px;
+   }
+
+   85.5% {
+    left: 0;
+    top: 64px;
+   }
+
+   87.5% {
+    left: 0;
+    top: 32px;
+   }
+
+   98% {
+    left: 0;
+    top: 32px;
+   }
+
+   100% {
+    left: 0;
+    top: 0;
+   }
+  }
+
   .loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: -50px;
-    animation: speeder 0.4s linear infinite;
+   position: relative;
+   width: 96px;
+   height: 96px;
+   transform: rotate(45deg);
   }
 
-  .loader > span {
-    height: 5px;
-    width: 35px;
-    background: #f51313;
-    position: absolute;
-    top: -19px;
-    left: 60px;
-    border-radius: 2px 10px 1px 0;
+  .loader-square {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 28px;
+   height: 28px;
+   margin: 2px;
+   border-radius: 0px;
+   background: white;
+   background-size: cover;
+   background-position: center;
+   background-attachment: fixed;
+   animation: square-animation 10s ease-in-out infinite both;
   }
 
-  .base span {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 6px solid transparent;
-    border-right: 100px solid #f3cfcf;
-    border-bottom: 6px solid transparent;
+  .loader-square:nth-of-type(0) {
+   animation-delay: 0s;
   }
 
-  .base span:before {
-    content: "";
-    height: 22px;
-    width: 22px;
-    border-radius: 50%;
-    background: #f3cfcf;
-    position: absolute;
-    right: -110px;
-    top: -16px;
+  .loader-square:nth-of-type(1) {
+   animation-delay: -1.4285714286s;
   }
 
-  .base span:after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 0 solid transparent;
-    border-right: 55px solid #f3cfcf;
-    border-bottom: 16px solid transparent;
-    top: -16px;
-    right: -98px;
+  .loader-square:nth-of-type(2) {
+   animation-delay: -2.8571428571s;
   }
 
-  .face {
-    position: absolute;
-    height: 12px;
-    width: 20px;
-    background: #f3cfcf;
-    border-radius: 20px 20px 0 0;
-    transform: rotate(-40deg);
-    right: -125px;
-    top: -15px;
+  .loader-square:nth-of-type(3) {
+   animation-delay: -4.2857142857s;
   }
 
-  .face:after {
-    content: "";
-    height: 12px;
-    width: 12px;
-    background: #f51313;
-    right: 4px;
-    top: 7px;
-    position: absolute;
-    transform: rotate(40deg);
-    transform-origin: 50% 50%;
-    border-radius: 0 0 2px 2px;
+  .loader-square:nth-of-type(4) {
+   animation-delay: -5.7142857143s;
   }
 
-  .loader > span > span {
-    width: 30px;
-    height: 1px;
-    background: #ffffff;
-    position: absolute;
+  .loader-square:nth-of-type(5) {
+   animation-delay: -7.1428571429s;
   }
 
-  .loader > span > span:nth-child(1) {
-    animation: fazer1 0.2s linear infinite;
+  .loader-square:nth-of-type(6) {
+   animation-delay: -8.5714285714s;
   }
 
-  .loader > span > span:nth-child(2) {
-    top: 3px;
-    animation: fazer2 0.4s linear infinite;
-  }
-
-  .loader > span > span:nth-child(3) {
-    top: 1px;
-    animation: fazer3 0.4s linear infinite;
-    animation-delay: -1s;
-  }
-
-  .loader > span > span:nth-child(4) {
-    top: 4px;
-    animation: fazer4 1s linear infinite;
-    animation-delay: -1s;
-  }
-
-  @keyframes fazer1 {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -80px;
-      opacity: 0;
-    }
-  }
-
-  @keyframes fazer2 {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -100px;
-      opacity: 0;
-    }
-  }
-
-  @keyframes fazer3 {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -50px;
-      opacity: 0;
-    }
-  }
-
-  @keyframes fazer4 {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -150px;
-      opacity: 0;
-    }
-  }
-
-  @keyframes speeder {
-    0% {
-      transform: translate(2px, 1px) rotate(0deg);
-    }
-    10% {
-      transform: translate(-1px, -3px) rotate(-1deg);
-    }
-    20% {
-      transform: translate(-2px, 0px) rotate(1deg);
-    }
-    30% {
-      transform: translate(1px, 2px) rotate(0deg);
-    }
-    40% {
-      transform: translate(1px, -1px) rotate(1deg);
-    }
-    50% {
-      transform: translate(-1px, 3px) rotate(-1deg);
-    }
-    60% {
-      transform: translate(-1px, 1px) rotate(0deg);
-    }
-    70% {
-      transform: translate(3px, 1px) rotate(-1deg);
-    }
-    80% {
-      transform: translate(-2px, -1px) rotate(1deg);
-    }
-    90% {
-      transform: translate(2px, 1px) rotate(0deg);
-    }
-    100% {
-      transform: translate(1px, -2px) rotate(-1deg);
-    }
-  }
-
-  .longfazers {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  .longfazers span {
-    position: absolute;
-    height: 2px;
-    width: 20%;
-    background: #ffffff;
-  }
-
-  .longfazers span:nth-child(1) {
-    top: 20%;
-    animation: lf 0.6s linear infinite;
-    animation-delay: -5s;
-  }
-
-  .longfazers span:nth-child(2) {
-    top: 40%;
-    animation: lf2 0.8s linear infinite;
-    animation-delay: -1s;
-  }
-
-  .longfazers span:nth-child(3) {
-    top: 60%;
-    animation: lf3 0.6s linear infinite;
-  }
-
-  .longfazers span:nth-child(4) {
-    top: 80%;
-    animation: lf4 0.5s linear infinite;
-    animation-delay: -3s;
-  }
-
-  @keyframes lf {
-    0% {
-      left: 200%;
-    }
-    100% {
-      left: -200%;
-      opacity: 0;
-    }
-  }
-
-  @keyframes lf2 {
-    0% {
-      left: 200%;
-    }
-    100% {
-      left: -200%;
-      opacity: 0;
-    }
-  }
-
-  @keyframes lf3 {
-    0% {
-      left: 200%;
-    }
-    100% {
-      left: -100%;
-      opacity: 0;
-    }
-  }
-
-  @keyframes lf4 {
-    0% {
-      left: 200%;
-    }
-    100% {
-      left: -100%;
-      opacity: 0;
-    }
-  }
-
-  /* ✅ CLOUDS - moving right to left with px values */
-  .clouds {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-  }
-
-  .cloud {
-    position: absolute;
-    background: #fff;
-    border-radius: 50%;
-    opacity: 0.25;
-    animation: moveClouds linear infinite;
-  }
-
-  .cloud::before,
-  .cloud::after {
-    content: "";
-    position: absolute;
-    background: #fff;
-    border-radius: 50%;
-  }
-
-  .cloud::before {
-    width: 60%;
-    height: 60%;
-    top: -30%;
-    left: 10%;
-  }
-
-  .cloud::after {
-    width: 40%;
-    height: 40%;
-    top: -20%;
-    left: 50%;
-  }
-
-  /* Clouds start off-screen (right) and move left */
-  .cloud1 {
-    width: 100px;
-    height: 60px;
-    top: 15%;
-    left: 1400px; /* off-screen to the right */
-    animation-duration: 2s;
-  }
-
-  .cloud2 {
-    width: 150px;
-    height: 80px;
-    top: 35%;
-    left: 1600px;
-    animation-duration: 3s;
-  }
-
-  .cloud3 {
-    width: 80px;
-    height: 50px;
-    top: 20%;
-    left: 2000px;
-    animation-duration: 4s;
-  }
-  .cloud4 {
-    width: 100px;
-    height: 80px;
-    top: 70%;
-    left: 1100px;
-    animation-duration: 3s;
-  }
-  .cloud5 {
-    width: 170px;
-    height: 50px;
-    top: 80%;
-    left: 1500px;
-    animation-duration: 2s;
-  }
-
-  @keyframes moveClouds {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-2000px);
-    }
+  .loader-square:nth-of-type(7) {
+   animation-delay: -10s;
   }`;
 
 export default Loader;

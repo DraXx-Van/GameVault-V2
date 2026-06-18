@@ -110,6 +110,7 @@ const Discover = () => {
                 name={game.name}
                 image={game.background_image}
                 rating={game.rating}
+                game={game}
               />
             );
         })}

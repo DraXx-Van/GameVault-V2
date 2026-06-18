@@ -107,6 +107,51 @@ export const getStores = async (id) => {
   return response.data.results;
 }
 
+export const getSimilarGames = async (genres, currentGameId) => {
+  const randomPage = Math.floor(Math.random() * 5) + 1;
+
+  const response = await axios.get(
+    "https://api.rawg.io/api/games",
+    {
+      params: {
+        page: randomPage,
+        page_size: 20,
+        key: API_KEY,
+        genres: genres,
+      }
+    }
+  );
+
+  const results = response.data.results;
+
+  // Remove current game
+  const filtered = results.filter(
+    game => game.id !== currentGameId
+  );
+
+  // Shuffle
+  const shuffled = filtered.sort(
+    () => Math.random() - 0.5
+  );
+
+  // Return only 8 cards
+  return shuffled.slice(0, 8);
+};
+
+export const getAchievements = async (id) => {
+  const response = await axios.get(
+    `https://api.rawg.io/api/games/${id}/achievements`,
+    {
+      params: {
+        key: API_KEY,
+        
+      }
+    }
+  )
+
+  return response.data.results;
+}
+ 
 // Searches YouTube Data API v3 for an official game trailer.
 // Returns a YouTube video ID string, or null if unavailable / no key set.
 export const searchYouTubeTrailer = async (gameName) => {
@@ -126,4 +171,10 @@ export const searchYouTubeTrailer = async (gameName) => {
   }
 };
 
-
+export const getCroppedImageUrl = (url) => {
+  if (!url) return '';
+  const target = 'media/';
+  const index = url.indexOf(target);
+  if (index === -1) return url;
+  return url.slice(0, index) + 'media/crop/600/400/' + url.slice(index + target.length);
+};

@@ -1,10 +1,12 @@
 import GameDeatilsHero from './GameDeatilsHero';
 import GamePriceCard from './GamePriceCard';
+import { getCroppedImageUrl } from '../../services/rawgApi';
 import GameRatingCard from './GameRatingCard';
 import GameDev from './GameDev';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import GameCard from '../discover/GameCard';
 
-const AboutSection = ({ game }) => {
+const AboutSection = ({ game,achievements }) => {
   const [fullDetails, setDetails] = useState(true);
   const description = game.description_raw || game.description || "No description available.";
   
@@ -43,6 +45,26 @@ const AboutSection = ({ game }) => {
           </div>
         </div>
       ) : <h3 className='text-center opacity-80 whitespace-pre-line'>System Requirements Not Available</h3>}
+      {achievements && achievements.length > 0 && (
+        <div className='mt-8 pt-5 border-t border-white/10'>
+          <h3 className='uppercase text-gv-muted font-bold tracking-widest font-mono mb-4 flex items-center gap-2'>
+            Game Achievements
+          </h3>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+            {achievements.slice(0, 6).map(ach => (
+              <div key={ach.id} className='flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors group'>
+                <div className='w-11 h-11 shrink-0 rounded md:rounded-lg overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.5)]'>
+                  <img loading="lazy" decoding="async" src={getCroppedImageUrl(ach.image)} alt={ach.name} className='w-full h-full object-contain group-hover:scale-103 transition-transform duration-500' />
+                </div>
+                <div className='flex-1 min-w-0 flex flex-col justify-center'>
+                  <h4 className='text-white/90 font-bold text-xs truncate'>{ach.name}</h4>
+                  <p className='text-white/50 text-[10px] mt-0.5 truncate' title={ach.description}>{ach.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -73,20 +95,48 @@ const MediaGallery = ({ screenshots }) => {
   );
 };
 
-const GameContent = ({ game,screenshots,stores }) => {
+const RealatedGames = ({similarGames}) => {
+  return (
+    <div className='mt-8 pt-5 border-t border-white/10' >
+      <h3 className='uppercase text-gv-muted font-bold tracking-widest font-mono'>Similar Games</h3>
+      <div className='flex gap-4 overflow-x-auto scrollbar-thumb-gv-accent snap-x pb-6 w-full px-2 py-6'>
+        {similarGames.map( game => {
+          return (
+            <div key={game.id} className='w-72 shrink-0'>
+            <GameCard
+              name={game.name}
+              image={game.background_image} 
+              id={game.id}
+              game={game}
+            />
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+const GameContent = ({ game,screenshots,stores,similarGames,achievements }) => {
+
+  const storesref  = useRef(null);
+
   return (
     <div className='flex-1 flex flex-col gap-6 rounded-3xl h-full overflow-x-hidden overflow-y-auto pb-10'>
-      <GameDeatilsHero game={game} />
+      <GameDeatilsHero game={game} storesRef={storesref} />
       <div className='px-10 py-2'>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-10'>
-          <AboutSection game={game} />
-          <div className='flex-col gap-5 flex'>
+          <AboutSection achievements={achievements} game={game} />
+          <div className='flex-col gap-5 flex sticky top-6 self-start'>
             <GameRatingCard game={game} />
             <GameDev game={game} />
-            <GamePriceCard stores={stores} game={game.stores} />
+            <div ref={storesref}>
+              <GamePriceCard stores={stores} game={game.stores} />
+            </div>
           </div>
         </div>
         <MediaGallery screenshots={screenshots}/>
+        <RealatedGames similarGames={similarGames}/>
       </div>
     </div>
   );
